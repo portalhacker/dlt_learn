@@ -2,34 +2,42 @@ from json import dumps as json_dumps
 from os import environ as os_environ
 from time import time
 
-from dlt.sources.helpers.requests import get as requests_get
-from dlt.sources.helpers.rest_client import RESTClient
+from dlt.sources.helpers.requests import (
+    Session as requests_Session,
+)
+from dlt.sources.helpers.requests import (
+    get as requests_get,
+)
+from dlt.sources.helpers.rest_client.client import RESTClient
 from dlt.sources.helpers.rest_client.paginators import PageNumberPaginator
 
 # from requests import get as requests_get
 from dlt.sources.rest_api import rest_api_source
+from requests import get as requests_get
 
-os_environ["RUNTIME__LOG_LEVEL"] = "INFO"
+# os_environ["RUNTIME__LOG_LEVEL"] = "INFO"
 
 BASE_API_URL = "https://rickandmortyapi.com/api"
 
 
 def get_characters():
     page_number = 1
-
+    session = requests_Session()
     while True:
         params = {"page": page_number}
 
-        response = requests_get(f"{BASE_API_URL}/character", params=params)
+        # response = requests_get(f"{BASE_API_URL}/character", params=params)
+        response = session.get(f"{BASE_API_URL}/character", params=params)
         response.raise_for_status()
         page_json = response.json()
         print(f"✅ Got page {page_number} with {len(page_json['results'])} results")
 
-        if page_json["info"]["next"] != None:
+        if page_json["info"]["next"] is not None:
             yield page_json["results"]
             page_number += 1
         else:
             break
+    session.close()
 
 
 def get_characters_dlt():

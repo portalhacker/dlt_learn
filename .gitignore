@@ -9,5 +9,6 @@ wheels/
 # Virtual environments
 .venv
 
+**/.dlt/secrets.toml
 **/data/*
 **/*.duckdb

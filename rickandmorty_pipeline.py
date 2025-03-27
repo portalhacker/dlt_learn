@@ -10,6 +10,7 @@ rickandmorty_pipeline = dlt_pipeline(
     pipeline_name="rickandmorty_pipeline",
     destination="duckdb",
     dataset_name="rickandmorty",
+    dev_mode=True,
 )
 start = time()
 # pipeline_info = rickandmorty_pipeline.run(
@@ -23,14 +24,14 @@ print(pipeline_info)
 
 
 # filesystem parquet
-os_environ["DESTINATION__FILESYSTEM__BUCKET_URL"] = (
-    "file:///Users/flo/Developer/tools/dlt_learn/data"
-)
-rickandmorty_pipeline = dlt_pipeline(
-    pipeline_name="rickandmorty_pipeline",
-    destination="filesystem",
-    dataset_name="rickandmorty",
-)
+# os_environ["DESTINATION__FILESYSTEM__BUCKET_URL"] = (
+#     "file:///Users/flo/Developer/tools/dlt_learn/data"
+# )
+# rickandmorty_pipeline = dlt_pipeline(
+#     pipeline_name="rickandmorty_pipeline",
+#     destination="filesystem",
+#     dataset_name="rickandmorty",
+# )
 # pipeline_info = rickandmorty_pipeline.run(
 #     get_characters(),
 #     table_name="characters",
