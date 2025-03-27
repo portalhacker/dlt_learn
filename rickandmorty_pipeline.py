@@ -3,7 +3,7 @@ from time import time
 
 from dlt import pipeline as dlt_pipeline
 
-from rickandmorty import get_characters
+from rickandmorty import get_characters, rickandmorty_source
 
 # duckdb
 rickandmorty_pipeline = dlt_pipeline(
@@ -12,8 +12,11 @@ rickandmorty_pipeline = dlt_pipeline(
     dataset_name="rickandmorty",
 )
 start = time()
+# pipeline_info = rickandmorty_pipeline.run(
+#     get_characters(), table_name="characters", write_disposition="replace"
+# )
 pipeline_info = rickandmorty_pipeline.run(
-    get_characters(), table_name="characters", write_disposition="replace"
+    rickandmorty_source, write_disposition="replace"
 )
 print(f"Pipeline took {time() - start} seconds")
 print(pipeline_info)
@@ -28,9 +31,9 @@ rickandmorty_pipeline = dlt_pipeline(
     destination="filesystem",
     dataset_name="rickandmorty",
 )
-pipeline_info = rickandmorty_pipeline.run(
-    get_characters(),
-    table_name="characters",
-    loader_file_format="parquet",
-)
-print(pipeline_info)
+# pipeline_info = rickandmorty_pipeline.run(
+#     get_characters(),
+#     table_name="characters",
+#     loader_file_format="parquet",
+# )
+# print(pipeline_info)
