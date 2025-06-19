@@ -1,4 +1,4 @@
-from os import environ as os_environ
+# from os import environ as os_environ
 from time import time
 
 from dlt import pipeline as dlt_pipeline
@@ -13,9 +13,9 @@ rickandmorty_pipeline = dlt_pipeline(
     dev_mode=True,
 )
 start = time()
-# pipeline_info = rickandmorty_pipeline.run(
-#     get_characters(), table_name="characters", write_disposition="replace"
-# )
+pipeline_info = rickandmorty_pipeline.run(
+    get_characters(), table_name="characters", write_disposition="replace"
+)
 pipeline_info = rickandmorty_pipeline.run(
     rickandmorty_source, write_disposition="replace"
 )
